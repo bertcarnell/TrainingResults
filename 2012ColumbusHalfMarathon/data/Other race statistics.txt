@@ -1,0 +1,14 @@
+Location	Race Time	Time of Day	Pace Between	Overall Place	Division Place	Sex Place	Age Graded Place
+Time 	1:56:26 	9:29:55 	8:58 	2352/9931 	192/512 	1369/3540 	4307/9931
+10K 	54:48 	8:28:17 	8:50 	2290/9855 	191/510 	1334/3512 	4304/9855
+ChipStart 	2:23 	7:33:29 		1315/9931 	119/512 	792/3540 	792/9931
+GunStart 	00:00 	7:31:07 		
+
+start to 10K
+passed 170 runners overall
+passed by 646 runners overall
+
+10K to finish
+Passed 89 runners overall
+Passed by 285 runners overall
+
