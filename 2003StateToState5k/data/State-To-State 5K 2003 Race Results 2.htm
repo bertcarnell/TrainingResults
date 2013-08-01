@@ -1,0 +1,3696 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html>
+<head>
+    <title>State-To-State 5K 2003 Race Results @ Athlinks.com</title>
+    <meta property="og:title" content="State-To-State 5K 2003 Race Results @ Athlinks.com" />
+    <meta property="og:url" content="http://www.athlinks.com/eventdetail.aspx?eventid=65990" />
+    <meta property="og:site_name" content="Athlinks.com" />
+    <meta property="og:description" content="Track the State-To-State 5K 2003 Race Results @ Athlinks.com!" />
+    <meta property="og:type" content="activity" />
+    <meta property="og:image" content="http://www.athlinks.com/images/athlinks_fblike.png" />
+    <meta property="fb:admins" content="722006301,1276015044" />
+  <meta name="description" content="State-To-State 5K 2003 race results, registration, and photos. Run - 5K, Run - 5K." />
+  <meta name="keywords" content="State-To-State 5K 2003, Run - 5K, Run - 5K, race results, registration, race photos, race results, upcoming events, racing results, running results, marathon results, triathlon results, cycling results, mountain bike results, swim results, swimming events, running events, road race, Adventure Race" />
+  
+<script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+<link rel="stylesheet" type="text/css" href="/styles/body.css?ts=4"/>
+<link rel="stylesheet" type="text/css" href="/styles/default.css?ts=4"/>
+<link rel="stylesheet" type="text/css" href="/scripts/jquery-tooltip/css/global.css?ts=4"/>
+<!--[if IE]>
+<style type="text/css">
+  .clsHasFloats {
+    zoom: 1;     /* triggers hasLayout */
+    }  /* Only IE can see inside the conditional comment
+    and read this CSS rule. Don't ever use a normal HTML
+    comment inside the CC or it will close prematurely. */
+</style>
+<![endif]-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script src="/scripts/jquery-jtemplates.js?ts=1" type="text/javascript"></script>
+<script src="/scripts/common.js?ts=2" type="text/javascript"></script>
+<script src="/scripts/jquery.bt.js?ts=1" type="text/javascript"></script>
+<script src="/scripts/fancybox/jquery.fancybox-1.3.4.js?ts=1" type="text/javascript" ></script>
+<script src="/scripts/jquery.numeric.pack.js?ts=1" type="text/javascript"></script>
+<script src="/scripts/jquery.bbq.js?ts=1" type="text/javascript"></script>
+<script src="http://ajax.microsoft.com/ajax/jquery.validate/1.5.5/jquery.validate.js" type="text/javascript"></script>
+
+  <script language="javascript" type="text/javascript" src="/scripts/highcharts.js"></script>
+  <script type="text/javascript">
+    var _CONST_MSG_ADDREQUEST = 'Click Here to add your time & request results.',
+        _CONST_MSG_ADDURL = 'Please provide a link to results.',
+        _CONST_MSG_ADDTIME = 'hh:mm:ss';
+
+    $(document).ready(function() {
+      $("#btnQueueListOpen").html(_CONST_MSG_ADDREQUEST);
+      
+          RenderGraph();
+        
+          $("#lstCourseSelect").msDropDown();
+        if( '' === '' ){
+          $("#btnSearchByBibClear").hide();
+        }else{
+          $("#btnSearchByBibClear").show();
+        }
+        $("#txtResultsTime").focus(function(){  
+          if( $(this).val() === _CONST_MSG_ADDTIME ){
+            $(this).val('').removeClass('clsDimB').addClass('clsBlack');
+          }
+        });
+        $("#txtResultsTime").blur(function(){
+          if( $(this).val() === '' ){
+            $(this).val('').removeClass('clsBlack').addClass('clsDimB').val(_CONST_MSG_ADDTIME);
+          }
+        });
+  //      $("#divMapWorksheet").hide();
+  //      $("#btnEventMap").click(function() {
+  //          $("#divMapWorksheet").show();
+  //          $("#frmMapWorksheet").attr("src", "/MapTest.aspx?eventid=65990");
+  //          return false;
+  //      });
+        LoadSummaryData();
+        LoadMasterEventList(65990);
+        // Call the init function on the ResultsView Control.
+        ctrlResultsView_Init();
+      
+    });
+    function SwitchCourse(){
+      var url = '/time.aspx?eventid=65990&courseid=' + $("#lstCourseSelect").val();
+      document.location.href= url;
+    }
+   function LoadSummaryData() {
+     var eventID = '65990';
+     var courseID = '97583';
+     PageMethods.BindSummaryTimes(
+            eventID,
+            courseID,
+            BindSummaryTimes_Succeed,
+            BindSummaryTimes_Fail
+        );
+   }
+   function BindSummaryTimes_Succeed(data)
+   {
+       summary = JSON.parse(data);
+        $("#lblCountMale").html(summary.CountMaleString);
+        $("#lblCountFemale").html(summary.CountFemaleString);
+        $("#lblCountAll").html(summary.CountAll);
+        $("#lblAverageTime").html(summary.AverageTime);
+        $("#lblAverageTimeMale").html(summary.AverageTimeMale);
+        $("#lblAverageTimeFemale").html(summary.AverageTimeFemale);
+        $("#lblTopMaleName").html(summary.TopMaleName);
+        $("#lblTopFemaleName").html(summary.TopFemaleName);
+        $("#lblTopMaleTime").html(summary.TopMaleTime);
+        $("#lblTopFemaleTime").html(summary.TopFemaleTime);
+        $("#lblTopMaleMemberName").html(summary.TopMaleMemberName);
+        $("#lblTopFemaleMemberName").html(summary.TopFemaleMemberName);
+        $("#lblTopMaleMemberTime").html(summary.TopMaleMemberTime);
+        $("#lblTopFemaleMemberTime").html(summary.TopFemaleMemberTime);
+      }
+   function BindSummaryTimes_Fail(error)
+   {
+       $(".clsEventSummary").hide();
+   }
+
+   function ChangeEvent(eventID) {
+       window.location.href = '/time.aspx?eventid=' + eventID;
+   }
+   function LoadMasterEventList(eventID) {
+       PageMethods.GetRelatedEvents(
+            eventID,
+            LoadMasterEventList_Succeed,
+            LoadMasterEventList_Fail);
+   }
+    function LoadMasterEventList_Succeed(data) {
+      var ret = JSON.parse(data);
+      if( ret.length === 0 ){
+        $("#divMasterList").hide();
+        return;
+      }
+      $.each(ret, function() {
+        if ('2003' != this['Value']) {
+          $("#lstMasterlist").append($("<option></option>").val(this['Key']).html(this['Value']));
+        }
+      });
+      $("#divMasterlist").show();
+    }
+   function LoadMasterEventList_Fail(error) {
+      $("#divMasterlist").hide();
+   }
+  function LoadUnofficialEntryForRacer(racerID, eventID, show){
+    $.ajax({
+      type: "GET",
+      url: "http://api.athlinks.com/athletes/results/" + racerID + "/unofficial/" + eventID + "?key=8253934e71896ea92a53f00e3577efa0&format=json&callback=?",
+      crossDomain: true,
+      contentType: "application/json; charset=utf-8",
+      dataType: "jsonp",
+      success: function (msg) {
+        var uTime = msg.UnofficialTime,
+            courseID = msg.Race !== null ? msg.Race.Courses[0].CourseID : 0;
+        $("#txtResultsTime").val(uTime);
+        $("#lstResultsCourses").val(courseID);
+        $("#btnQueueListDelete").show();
+        if( show === true ){
+          $("#btnQueueListOpen").trigger("click");
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        // Do Nothing.
+      }
+    });  
+  }
+  function LoadWaitList(){
+    $.ajax({
+      type: "GET",
+      url: "http://api.athlinks.com/races/waitlist2/65990?key=8253934e71896ea92a53f00e3577efa0&format=json&callback=?",
+      crossDomain: true,
+      contentType: "application/json; charset=utf-8",
+      dataType: "jsonp",
+      success: function (msg) {
+        $("#divQueueList").css('opacity','1');
+        var msgWaiting = msg.length == 1 ? "1 Other Member Waiting" : msg.length + " Other Members Waiting";
+        $("#divQueueListCount").html(msgWaiting);
+        $("#divQueueList").setTemplate($("#tplWaitList").html());
+        $("#divQueueList").processTemplate(msg);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        $("#divQueueList").val('<div>Could not load start list.</div>');
+      }
+    });  
+  }
+
+function QueueListShowForm(){
+  $("#btnQueueListOpen").fadeOut('fast', function(){
+    $("#divRSVPForm").fadeIn('slow');
+    $("#txtResultsUrl").val(_CONST_MSG_ADDURL);
+  });
+}
+$("#txtResultsUrl").live("focus",function(){
+  if( $(this).val() === _CONST_MSG_ADDURL ){
+    $(this).val('');
+  }
+});
+function DeleteUnofficialRaceEntry(){
+  var objMatch = {};
+      var jqxhr = $.ajax({
+        type: "POST",
+        url: "/time.aspx/DeleteUnofficialRaceEntry",
+        data: "{eventID:65990,courseID:0}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+      })
+      .done(function(msg){
+        $("#divRSVPForm").fadeOut('fast', function(){
+          $("#btnQueueListOpen").html(_CONST_MSG_ADDREQUEST);
+          $("#btnQueueListOpen").fadeIn('slow');
+          $("#btnQueueListDelete").hide();
+          $("#txtResultsUrl").val(_CONST_MSG_ADDURL);
+          $("#txtResultsTime").val('');
+          LoadWaitList();
+        });
+      })
+      .fail(function(){alert('Sorry, your request timed out. Please reload the page and try again.')})
+      .always(function(){});
+  
+}
+function QueueListSave(){
+  $("#btnQueueListSave").find('span').html('Saving ...');
+  var url = $("#txtResultsUrl").val(),
+      courseID = $("#lstResultsCourses").val(),
+      time = $("#txtResultsTime").val();
+
+  var formData = "{'eventID':65990,'url':'" + url + "','unofficialTime':'" + time + "','courseID':" + courseID + "}";
+  $.ajax({
+    type: "POST",
+    url: "time.aspx/SaveRequestLogItem",
+    data: formData,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (msg) {
+      $("#divRSVPForm").fadeOut('fast', function(){
+        $("#btnQueueListOpen").fadeIn('fast').find('span').html('Your request has been saved!');
+        LoadUnofficialEntryForRacer(0,65990,false);
+      });
+      $("#divQueueList").css('opacity','.3');
+      LoadWaitList();
+    },
+    error: function (msg) {
+      if (confirm('Sorry, we encountered an error saving. We will reload the page now. Please try again.')) {
+        var url = window.location.href;
+        window.location.href = url;
+      }
+    }
+  });
+}
+function RenderGraph(){
+  Highcharts.setOptions({
+	  chart: {
+		  style: {
+		    fontFamily: 'helvetica, arial',
+		    color: '#000000'
+		  }
+	  }
+  });
+  var chart;
+  var options = {
+	  chart: {
+		  defaultSeriesType: 'area',
+		  renderTo: 'divGraph'
+	  },
+	  credits: {
+		  enabled: false
+	  },
+	  exporting: {
+		  enabled: false
+	  },
+	  legend: {
+		  enabled: false
+	  },
+    title: {
+      text: 'Age Group & Gender Breakdown',
+      verticalAlign: 'bottom',
+      x: -20,
+      y: 200 //center,
+    },
+    xAxis:{
+      categories:['a','b','c','d','e','f','g','h','i','j','k','l']
+    },
+    tooltip: {
+      formatter: function() {
+        var s;
+        if (!this.point.barH) { // the pie chart
+            s = ''+ this.point.name +': '+ this.y;
+        } else {
+            s = '<div style="color:#464D5C; font-size:9pt; font-weight:bold; letter-spacing:-.05em; line-height:16pt;">Age Group: ' + this.x + '</div><br /><div style="color:#464D5C; font-family:helvetica; font-size:12pt; font-weight:bold; letter-spacing:-.05em; line-height:16pt;">' + 'Avg Time: ' + this.point.name  +'</div><br /><div style="color:#464D5C; font-family:helvetica; font-size:12pt; font-weight:bold; letter-spacing:-.05em; line-height:16pt;">Participants: '+ this.y + "</div>";
+        }
+        return s;
+      }
+    },
+    labels: {
+         items: [{
+            html: 'Gender Participation:',
+            style: {
+               left: '320px',
+               top: '15px',
+               color: 'black'            
+            }
+         }]
+      },
+      plotOptions: {
+		  pie:{slicedOffset:1},
+      series: {
+        borderWidth:0,
+        groupPadding:.1,
+        pointPadding:.02,
+        shadow: false
+		  }
+	  },
+	  yAxis: {
+		  gridLineColor: '#efefef',
+		  labels: { enabled: true },
+		  plotLines: [{
+		    value: 0,
+		    width: 1,
+		    color: '#000'
+		  }],
+		  title: {
+		    text: 'Athletes in Age Group'
+		  },
+		  min: 0
+	  },
+	  series: []
+  };
+  $.ajax({
+    type: "GET",
+    url: "http://api.athlinks.com/charts/AgeGroupsForRace?eventid=65990&courseid=97583&key=8253934e71896ea92a53f00e3577efa0&format=json&callback=?",
+    crossDomain: true,
+    contentType: "application/json; charset=utf-8",
+    dataType: "jsonp",
+    success: function (msg) {
+      options.xAxis.categories = msg.categories;
+      jQuery.each(msg.series, function (itemNo, item) {
+          var series;
+        if( item.type == "pie" ){
+          series = {
+            type: item.type,
+            showInLegend: false,
+            center: [490,40],
+            size: 80,
+            dataLabels: {
+              enabled:false
+            },
+            data: []
+          }
+          jQuery.each(item.data, function(iN, i){
+            series.data.push({
+              name: i.name,
+              y: i.y,
+              color: i.color,
+              sliced: true
+            })
+          });
+        }else{
+          series = {
+            type: item.type,
+            name: item.name,
+            color: item.color,
+            showInLegend: item.showInLegend,
+            data: []
+          }
+          jQuery.each(item.data, function(iN, i){
+            series.data.push({
+              id: i.id,
+              name: i.name,
+              y: i.y
+            })
+          });
+        }
+        options.series.push(series);
+      });
+      chart = new Highcharts.Chart(options);
+      //chart.render();
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      $("#divGraph").html('<div class="clsNotFound">There was an error loading graph.</div>');
+    }
+  });
+}
+</script>
+</head>
+<body onload="window.focus();">
+<form name="Form1" method="post" action="time.aspx?eventid=65990&amp;courseid=97583&amp;genderpage=A2" id="Form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTI3NDE0MjM0MWRkUAJEWJ19m8okA6UNDlbvN28RjEM=" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Form1'];
+if (!theForm) {
+    theForm = document.Form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=4dzxvVa1Xbf4TRA6RxWy740X_2hXvXyx05rfQ8v5FLLmENS7Wf4LjVGh-IbECl_zqkMug5_6xtAHxQWT0&amp;t=634970873020000000" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+function ChangeAgeGroup( ga ){ window.location.href = 'http://www.athlinks.com/time.aspx?eventid=65990&courseid=97583&mode=a&genderpage=' + ga + '#classsel'; }//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=ucjQdogyCXwBo8r3y_HLpJYAET1xnMJ0smGwXHDPI7hhjSXjnJt0Tk1InWlzPwyUxq-RSyg2mfOduQBNxUJCPi-DzdQJs_sB9iXEhy-_Z0JXG_zN8OAO_vsMzsPgzc1G0PBsTTuz2UqfvaHtDz5hWf71SeUj0pEuR3ju3A2&amp;t=6119e399" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side framework failed to load.');
+//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=027OFRlNQM_F0nwRUeCuNjXZeHIY62_xkTBXCOw-foVFGlq2LRooFhPyF9WleCd_eNteKfamP__vd6b1xgMXKJYGi2v_pbNocycJWHfsBOmBgLCFfpdprpQFDJ5TMRV7bKdOrZ9A2WTlTT0aBnrZmpNtKB_EGV05_ZnmGdfVyR57_rcF0&amp;t=6119e399" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+var PageMethods = function() {
+PageMethods.initializeBase(this);
+this._timeout = 0;
+this._userContext = null;
+this._succeeded = null;
+this._failed = null;
+}
+PageMethods.prototype = {
+_get_path:function() {
+ var p = this.get_path();
+ if (p) return p;
+ else return PageMethods._staticInstance.get_path();},
+DeleteUnofficialRaceEntry:function(eventID,succeededCallback, failedCallback, userContext) {
+/// <param name="eventID" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+return this._invoke(this._get_path(), 'DeleteUnofficialRaceEntry',false,{eventID:eventID},succeededCallback,failedCallback,userContext); },
+SaveRequestLogItem:function(eventID,url,unofficialTime,courseID,succeededCallback, failedCallback, userContext) {
+/// <param name="eventID" type="Number">System.Int32</param>
+/// <param name="url" type="String">System.String</param>
+/// <param name="unofficialTime" type="String">System.String</param>
+/// <param name="courseID" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+return this._invoke(this._get_path(), 'SaveRequestLogItem',false,{eventID:eventID,url:url,unofficialTime:unofficialTime,courseID:courseID},succeededCallback,failedCallback,userContext); },
+GetRelatedEvents:function(eventID,succeededCallback, failedCallback, userContext) {
+/// <param name="eventID" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+return this._invoke(this._get_path(), 'GetRelatedEvents',false,{eventID:eventID},succeededCallback,failedCallback,userContext); },
+BindSummaryTimes:function(eventID,courseID,succeededCallback, failedCallback, userContext) {
+/// <param name="eventID" type="Number">System.Int32</param>
+/// <param name="courseID" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+return this._invoke(this._get_path(), 'BindSummaryTimes',false,{eventID:eventID,courseID:courseID},succeededCallback,failedCallback,userContext); }}
+PageMethods.registerClass('PageMethods',Sys.Net.WebServiceProxy);
+PageMethods._staticInstance = new PageMethods();
+PageMethods.set_path = function(value) {
+PageMethods._staticInstance.set_path(value); }
+PageMethods.get_path = function() { 
+/// <value type="String" mayBeNull="true">The service url.</value>
+return PageMethods._staticInstance.get_path();}
+PageMethods.set_timeout = function(value) {
+PageMethods._staticInstance.set_timeout(value); }
+PageMethods.get_timeout = function() { 
+/// <value type="Number">The service timeout.</value>
+return PageMethods._staticInstance.get_timeout(); }
+PageMethods.set_defaultUserContext = function(value) { 
+PageMethods._staticInstance.set_defaultUserContext(value); }
+PageMethods.get_defaultUserContext = function() { 
+/// <value mayBeNull="true">The service default user context.</value>
+return PageMethods._staticInstance.get_defaultUserContext(); }
+PageMethods.set_defaultSucceededCallback = function(value) { 
+ PageMethods._staticInstance.set_defaultSucceededCallback(value); }
+PageMethods.get_defaultSucceededCallback = function() { 
+/// <value type="Function" mayBeNull="true">The service default succeeded callback.</value>
+return PageMethods._staticInstance.get_defaultSucceededCallback(); }
+PageMethods.set_defaultFailedCallback = function(value) { 
+PageMethods._staticInstance.set_defaultFailedCallback(value); }
+PageMethods.get_defaultFailedCallback = function() { 
+/// <value type="Function" mayBeNull="true">The service default failed callback.</value>
+return PageMethods._staticInstance.get_defaultFailedCallback(); }
+PageMethods.set_enableJsonp = function(value) { PageMethods._staticInstance.set_enableJsonp(value); }
+PageMethods.get_enableJsonp = function() { 
+/// <value type="Boolean">Specifies whether the service supports JSONP for cross domain calling.</value>
+return PageMethods._staticInstance.get_enableJsonp(); }
+PageMethods.set_jsonpCallbackParameter = function(value) { PageMethods._staticInstance.set_jsonpCallbackParameter(value); }
+PageMethods.get_jsonpCallbackParameter = function() { 
+/// <value type="String">Specifies the parameter name that contains the callback function name for a JSONP request.</value>
+return PageMethods._staticInstance.get_jsonpCallbackParameter(); }
+PageMethods.set_path("time.aspx");
+PageMethods.DeleteUnofficialRaceEntry= function(eventID,onSuccess,onFailed,userContext) {
+/// <param name="eventID" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+PageMethods._staticInstance.DeleteUnofficialRaceEntry(eventID,onSuccess,onFailed,userContext); }
+PageMethods.SaveRequestLogItem= function(eventID,url,unofficialTime,courseID,onSuccess,onFailed,userContext) {
+/// <param name="eventID" type="Number">System.Int32</param>
+/// <param name="url" type="String">System.String</param>
+/// <param name="unofficialTime" type="String">System.String</param>
+/// <param name="courseID" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+PageMethods._staticInstance.SaveRequestLogItem(eventID,url,unofficialTime,courseID,onSuccess,onFailed,userContext); }
+PageMethods.GetRelatedEvents= function(eventID,onSuccess,onFailed,userContext) {
+/// <param name="eventID" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+PageMethods._staticInstance.GetRelatedEvents(eventID,onSuccess,onFailed,userContext); }
+PageMethods.BindSummaryTimes= function(eventID,courseID,onSuccess,onFailed,userContext) {
+/// <param name="eventID" type="Number">System.Int32</param>
+/// <param name="courseID" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+PageMethods._staticInstance.BindSummaryTimes(eventID,courseID,onSuccess,onFailed,userContext); }
+//]]>
+</script>
+
+<div>
+
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAKqiXRBVKZAv0fHDoJ+2rHLKFL4ukzn/DgxmItauV9yjSOxujPYK/HT8PumzEG/zU8ZdN55" />
+</div>
+
+<input type="submit" onclick="return false" style="position:absolute; left:-200px;"/>
+<script type='text/javascript'>  var googletag = googletag || {}; googletag.cmd = googletag.cmd || []; (function () { var gads = document.createElement('script'); gads.async = true; gads.type = 'text/javascript'; var useSSL = 'https:' == document.location.protocol; gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js'; var node = document.getElementsByTagName('script')[0]; node.parentNode.insertBefore(gads, node); })();</script>
+<script type='text/javascript'>  googletag.cmd.push(function () { googletag.defineSlot('/13132917/Athlinks_Main_Leaderboard_728x90', [728, 90], 'div-gpt-ad-1359490500044-0').addService(googletag.pubads()); googletag.pubads().enableSingleRequest(); googletag.enableServices(); });</script>
+<script language="javascript" type="text/javascript">
+  $(document).ready(function() {
+      if ($('#personalOptions')) {
+          var po = $('#personalOptions');
+          if (po.length > 0) { $('#personalOptions').clickMenu().removeClass("clsHidden"); }
+      }
+
+      SetSearch(searchOn == '' ? ('Results') : searchOn);
+      $("#txtSearchBox").click(function() { $(this).val() == prompts.Lookup(searchOn) ? $(this).val('') : $(this).val($(this).val()); });
+      $("#txtSearchBox").keydown(function(e) { if (e.keyCode == 13) { e.preventDefault(); Search($(this).val()); return false; } });
+      if ($('#browseContent')) {
+          var bc = $('#browseContent');
+          if (bc.length > 3) { $('#browseContent').clickMenu(); }
+      }
+      if ($("#Notice").is("div")) {
+          if (ShowNotice('13')) { $("#Notice").show(); }
+      }
+  });
+  function ShowNotice(noticeID) {
+      if (readCookie("notice" + noticeID) == "closed") {
+          return false;
+      }
+      return true;
+  }
+  function MarkNoticeAsRead(noticeID) {
+      createCookie("notice" + noticeID, "closed", 45);
+      $("#Notice").hide('fast');
+  }
+  var searchOn = '';
+  if( searchOn == 'Athlete' ){searchOn = 'Members';}
+  var term = '';
+  var url;
+  var prompts = new Dictionary();
+  prompts.Add("Members","Type Your Name Here to Find Your Results");prompts.Add("Clubs","Enter Club or Team Name");prompts.Add("Results","Type Your Name Here to Find Your Results");prompts.Add("Events","Enter Race Name");prompts.Add("Expo","Enter Company Name or Search Term");
+  function SetSearch( searchType ){
+      $("#txtSearchBox").val(prompts.Lookup(searchType));
+    ResetSearch( searchOn );
+    $("#search"+searchType).attr("src","/images/btnSearch_"+searchType+"_on.png");
+    searchOn = searchType;
+  }
+  function ResetSearch( onID ){
+    if( onID != '' ){
+      $("#search"+onID).attr("src",'/images/btnSearch_' + onID + '_off.png');
+      $("#pnlSearch"+onID).addClass('clsHidden');
+    }
+  }
+  function Search( id ){
+    var QS, term;
+    if( searchOn == 'Members' || searchOn == 'Results' ){ QS = 'search=Athlete'; }else if( searchOn == 'Event' ){ searchOn == 'Events'; }else{ QS = 'search='+searchOn; }
+    term = $("#txtSearchBox").val();
+    if( term == prompts.Lookup(searchOn) ){ alert('Please enter a search term in the box.'); return false; };
+    term = encode(term);
+    //QS = QS + '&term=' + term + '#term=' + term;
+    switch( searchOn ){
+      case 'Members':
+      case 'Results': QS = QS + '&term=' + term; url = "/searchbeta.aspx?" + QS; break;
+      case 'Events': QS = QS + '&term=' + term; url = "/search.aspx?" + QS; break;
+      case 'Clubs': QS = QS + '#term=' + term; url = "/GroupSearch.aspx?" + QS + "&mode=c"; break;
+      case 'Expo': QS = QS + '#term=' + term; url = "/GroupSearch.aspx?" + QS + "&mode=e"; break;
+    }
+    window.location.href = url;
+  }
+
+</script>
+
+<div  style="position:absolute; left:50%; margin-left:-475px; width:950px; z-index:2;">
+<div id="PageHead" style="margin:0 auto 0 auto; width:950px;">
+  <table width="950" cellpadding="0" cellspacing="0" border="0">
+    
+    <tr>
+      <td class="clsSideBorderWhite" style="width:100%"><div id="SiteCount"><table cellpadding="0" cellspacing="0" border="0" style="width:100%"><tr><td style="width: 200px;"><div class="clsTag">Compete. Claim. Connect.</div></td><td style="width: 625px;"><div class="clsCounts"><span class="clsCntL">Members: </span><span class="clsCntR">326,404</span><span class="clsCntL"> &nbsp;|&nbsp;Results: </span><span class="clsCntR">120,661,811</span><span class="clsCntL"> &nbsp;|&nbsp;Races: </span><span class="clsCntR">362,450</span><span class="clsCntL"> &nbsp;|&nbsp;Clubs: </span><span class="clsCntR">1,930</span></div></td><td style="text-align:right; width:175px;"><img src="/images/util/dot_alpha.gif" style="float:left; height:23px; width:1px;"/></td></tr></table></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="clsHeadRow clsSideBorderWhite">
+        <table style="width:auto;" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td class="clsCentered clsTopped" style="width: 200px;"><a href="/default.aspx"><img src="/images/logo.png" style="border: none; height: 86px; margin: 0px; padding: 0px; width: 94px;" alt="Athlinks.com - Compete. Connect." /></a></td>
+            <td style="width:250px;"><div class="clsCallToAction"></div></td>
+            <td class="clsLefted" style="width: 550px">
+              <table cellpadding="0" cellspacing="0" border="0" style="width: 550px">
+                <tr>
+                  <td align="right" style="height:24px; width:40px; white-space:nowrap"><div class="clsSearchPrompt"><strong>Find:</strong>&nbsp;</div></td>
+                  <td style="width: 510px;" align="left">
+                    <table cellpadding="1" cellspacing="0" border="0">
+                      <tr>
+                        <td><a onclick="SetSearch('Results')"><img src='/images/btnSearch_Results_Off.png' id="searchResults" style="border: none; cursor: pointer; height: 25px; margin: 0 1px 0 0;" alt="Click to Search for Results by Athlete" /></a></td>
+                        <td><a onclick="SetSearch('Members')"><img src='/images/btnSearch_Members_Off.png' id="searchMembers" style="cursor: pointer; border: none; cursor: pointer; height: 25px; margin: 0 1px 0 0;" alt="Click to Search for Members" /></a></td>
+                        <td><a onclick="SetSearch('Clubs')"><img src='/images/btnSearch_Clubs_Off.png' id="searchClubs" style="border: none; cursor: pointer; height: 25px; margin: 0 1px 0 0;" alt="Click to Search for Clubs" /></a></td>
+                        <td><a onclick="SetSearch('Events')"><img src='/images/btnSearch_Events_Off.png' id="searchEvents" style="border: none; cursor: pointer; height: 25px; margin: 0 1px 0 0;" alt="Click to Search for Upcoming Events" /></a></td>
+                        <td><a onclick="SetSearch('Expo')"><img src='/images/btnSearch_Expo_Off.png' id="searchExpo" style="border: none; cursor: pointer; height: 25px; margin: 0 1px 0 0;" alt="Click to Search the Expo" /></a></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td valign="top" style="width: 510px;">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 510px;">
+                      <tr>
+                        <td style="width: 350px;" class="clsSearchPrompt"><div><input type="text" id="txtSearchBox" maxlength="256" /></div></td>
+                        <td style="text-align: left; vertical-align: middle; width: 60px;"><img src="/images/btnGo.png" width="50" height="30" id="btnHeadSearch" alt="Go" onclick="Search('');" /></td>
+                        <td style="text-align: center; vertical-align: middle; width: 100px;"><div class="clsSmallBW"><a href="/AddRace.aspx">Add A Race<img src="/images/bltTranArrowR.gif" style="border: none; margin-left: 4px;" /></a></div></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td class="clsSideBorderWhite clsWelcomeBar">
+        <table style="border-bottom: solid 1px #ffffff; width: 100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="background-color: #650b01; text-align: left; vertical-align: top; width: 330px">
+            
+              <table cellpadding="0" cellspacing="0" border="0" style="background-color: #650b01; width: 325px;"><tr><td align="left" valign="middle"><div class="clsMedWhite" style="padding-left: 10px; padding-top: 3px"><strong><a href="http://www.athlinks.com/login.aspx?ReturnUrl=%2ftime.aspx%3feventid%3d65990%26courseid%3d97583%26genderpage%3dA2"><img src="/images/bltNavW.gif" width="3" height="5" hspace="4" vspace="0" border="0" alt="Bullet" />Login</a>&nbsp;&nbsp;</strong> <em><a href="/login.aspx?mode=passwordlookup"><img src="/images/bltNavW.gif" width="3" height="5" hspace="4" vspace="0" border="0" alt="Bullet" />Forgot Password</a></em><img src="/images/util/dot_alpha.gif" width="10" height="10" hspace="4" vspace="0" border="0" align="MIDDLE" alt="" /><strong><a href="http://www.athlinks.com/signup.aspx"><img src="/images/bltNavW.gif" width="3" height="5" hspace="4" vspace="0" border="0" alt="Bullet" />Sign Up</a></strong></div></td></tr></table>
+              
+            </td>
+            <td class="clsNavCapRight"><!--//--></td>
+            <td></td>
+            <td>
+              <table cellpadding="0" cellspacing="0" border="0" class="clsNavTable">
+                <tr>
+                  <td><div style="margin-left: 15px;" class="clsSearchPrompt"><strong>Browse:&nbsp;</strong></div></td>
+                  <td class="clsNavCapLeft"><!--//--></td>
+                  <td class="clsNavCell" style="padding-right: 7px;"><div class="clsSmallBW"><a href="/browse.aspx?g=&aF=0&aC=199&rC=&ct=&sp=&ph=0&dj=1&p=1&pS=50">Members</a></div></td>
+                  <td width="1" align="left" valign="top"><img src="/images/util/dot_alpha.gif" width="1" height="21" hspace="0" vspace="0" border="0" align="left" alt="" /></td>
+                  <td class="clsNavCell"><div class="clsSmallBW"><a href="/groupsearch.aspx?search=Clubs#mode=c">Clubs</a></div></td>
+                  <td width="1" align="left" valign="top"><img src="/images/util/dot_alpha.gif" width="1" height="21" hspace="0" vspace="0" border="0" align="left" alt="" /></td>
+                  <td class="clsNavCell"><div class="clsSmallBW"><a href="/RaceSearch.aspx">Events & Results</a></div></td>
+                  <td width="1" align="left" valign="top"><img src="/images/util/dot_alpha.gif" width="1" height="21" hspace="0" vspace="0" border="0" align="left" alt="" /></td>
+                  <td class="clsNavCell" style="padding-left: 7px;"><div class="clsSmallBW"><a href="/groupsearch.aspx?search=Expo#mode=e">Expo</a></div></td>
+                  <td width="1" align="left" valign="top"><img src="/images/util/dot_alpha.gif" width="1" height="21" hspace="0" vspace="0" border="0" align="left" alt="" /></td>
+                  <td class="clsNavCell"><div class="clsSmallBW"><a href="/actionspy.aspx">Action Spy</a></div>
+                  <td class="clsNavCapRight"><!--//--></td>
+                  <td width="1" align="left" valign="top"><img src="/images/util/dot_alpha.gif" width="1" height="21" hspace="0" vspace="0" border="0" align="left" alt="" /></td>
+                </tr>
+              </table>
+            </td>
+            <td></td>
+            <td align="right">
+              <table cellpadding="0" cellspacing="0" border="0" class="clsNavTable">
+                <tr>
+                  <td class="clsNavCapLeft"><!--//--></td>
+                  <td class="clsNavCell"><div class="clsSmallBW"><a href="/contact.aspx">Contact Us</a></div>
+                  <td width="1" align="left" valign="top"><img src="/images/util/dot_alpha.gif" width="1" height="21" hspace="0" vspace="0" border="0" align="left" alt="" /></td>
+                  <td class="clsNavCell"><div class="clsSmallBW"><a href="/faq.aspx">F.A.Q.</a></div>
+                  <td width="1" align="left" valign="top"><img src="/images/util/dot_alpha.gif" width="1" height="21" hspace="0" vspace="0" border="0" align="left" alt="" /></td>
+                  <td class="clsNavCell" style="padding-right: 7px;"><div class="clsSmallBW"><a href="/storeshirts.aspx">Shop</a></div></td>
+                  <td width="1" align="left" valign="top"><img src="/images/util/dot_alpha.gif" width="1" height="21" hspace="0" vspace="0" border="0" align="left" alt="" /></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        
+        <div class="clsHeadPageHead" style="">
+          
+              <div class="clsCentered" style="padding:0 3px 0 0; width:735px;">
+                
+                      <!-- Athlinks_Main_Leaderboard_728x90 -->
+                      <div id='div-gpt-ad-1359490500044-0' style='width:728px; height:90px;'><script type='text/javascript'>googletag.cmd.push(function () { googletag.display('div-gpt-ad-1359490500044-0'); });</script></div>
+                  
+              </div>
+          
+        </div>
+
+      </td>
+    </tr>
+  </table>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager1', 'Form1', [], [], [], 90, '');
+//]]>
+</script>
+
+
+<div id="PageBody" class="clsPadBot50">
+  
+  <div id="divMapWorksheet" style="display: none; width: 100%; height: 360px;"><iframe id="frmMapWorksheet" width="100%" height="360" hspace="0" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" vspace="0"></iframe></div>
+  
+  
+    <div class="clsHasFloats">
+      
+      <div class="clsFloatLeft cls620 clsMargRight20">
+        <div class="clsHasFloats" style="padding:10px 10px 20px 10px">
+          <div class="clsFloatLeft" style="width:60px;"></div>
+          <div class="clsTitle"><a href='/time.aspx?eventid=65990'>State-To-State 5K 2003</a></div>
+          <div class="clsPadded3 clsHasFloats">  
+            <div class="clsSmallDimB clsFloatLeft clsMargRight10">When: <span class="clsBodyB">Sun, Sep 28, 2003</span></div>
+            <div class="clsSmallDimB clsFloatLeft clsMargRight10">Where: <span class="clsBodyB">Oxford, OH, USA</span></div>
+            <div class="clsSmallDimB clsFloatLeft">Web: <span class="clsBodyB"><a href="http://statetostate.org">Official Site</a></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="clsFloatRight cls300">
+        <div class="clsHasFloats clsCentered clsPadTop10">
+
+          <div class="clsFloatLeft" style="padding:2px 0 2px 0; width:55px;"><iframe id="fbl" src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fathlinks.com%2Frace%2F65990&send=false&layout=box_count&width=52&show_faces=true&action=like&colorscheme=light&font&height=90" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:52px; height:65px;" allowTransparency="true"></iframe></div>
+          <div class="clsFloatLeft clsCentered clsPadTop10">
+            <div style="height:25px; padding:2px 0 1px 0; width:55px;"><a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="athlinks" data-related="athlinks">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div>
+            <div style="height:25px; padding:2px 0 1px 0; width:55px;"><!-- Place this tag where you want the +1 button to render --><g:plusone size="tall" annotation="none"></g:plusone><script type="text/javascript">                                                                                                                                                                                          (function () { var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true; po.src = 'https://apis.google.com/js/plusone.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s); })();</script></div>
+          </div>
+          <div id="div_" class="clsFloatLeft clsMargLeft5 clsLefted" style="display:none; width:170px;">
+            <span id="btnFollow">
+              <a id="lnkFollow" href="#divAddFriend" onclick="AddFriend.LaunchFriendForm(event, this, 1, _racerID, _racerName, 'follow_' + _racerID, '0', '');" class="jqFBox2">
+                <button id="" type="button" class="btn btnNeutralBig" value="Actions" style="margin-top:12px; width:auto;">
+                  <i class="partnered"></i>
+                  <span>Follow Race</span>
+                </button>
+              </a>
+            </span>
+            <button id="btnUnfollow" style="display:none; margin-top:12px;" type="button" class="btn btnNeutralBig" value="Actions" onclick="">
+              <i class="following"></i>
+              <span>Follow Race</span>
+            </button>
+          </div>
+
+        </div>  
+      </div>
+    </div>
+    <div class="clsHasFloats">
+      <div class="cls620 clsMargRight20 clsFloatLeft">
+        <div id="phCourses" class="clsPadTop10 clsPadSides10">
+          
+          <div class="clsHasFloats clsPadBot5"><select name="lstCourseSelect" id="lstCourseSelect" onchange="SwitchCourse();" style="width:90%"><option value="97607" title="/images/icon/icon_racecat_2.png" >Run - Half Marathon</option><option value="97583" title="/images/icon/icon_racecat_2.png" selected="selected">Run - 5K</option></select></div><br />
+        </div><div id="summaryGrid" class="clsPadBot10">
+          <table width="100%" border="0" cellpadding="3" cellspacing="0">
+            <thead>
+              <tr>
+                <th class="clsResultHK"></th>
+                <th colspan="2" class="clsResultHK clsCentered">Male</th>
+                <th colspan="2" class="clsResultHK clsCentered">Female</th>
+                <th class="clsResultHK clsCentered">Overall</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="clsResultBig">
+                <td class="cls20pct clsRighted" style="border-bottom:1px solid lightGrey">Average:</td>
+                <td colspan="2" class="cls30pct clsResultBL clsCentered" style="border-bottom:1px solid lightGrey"><div id="lblAverageTimeMale">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></td>
+                <td colspan="2" class="cls30pct clsResultBL clsCentered" style="border-bottom:1px solid lightGrey"><div id="lblAverageTimeFemale">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></td>
+                <td class="cls20pct clsResultBL clsCentered" style="border-bottom:1px solid lightGrey"><div id="lblAverageTime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></td>
+              </tr>
+              <tr class="clsResultMed">
+                <td class="clsRighted" style="border-bottom:1px solid lightGrey">Count:</td>
+                <td colspan="2" class="clsResultBL" style="border-bottom:1px solid lightGrey"><div id="lblCountMale"></div></td>
+                <td colspan="2" class="clsResultBL" style="border-bottom:1px solid lightGrey"><div id="lblCountFemale"></div></td>
+                <td class="clsResultBL" style="border-bottom:1px solid lightGrey"><div id="lblCountAll"></div></td>
+              </tr>
+              <tr class="clsResultMed">
+                <td class="clsRighted" style="border-bottom:1px solid lightGrey">Top Finisher:</td>
+                <td class="clsResultBL" style="border-bottom:1px solid lightGrey"><div class="clsSmall" id="lblTopMaleName"></div></td>
+                <td class="clsResultB" style="border-bottom:1px solid lightGrey"><div class="clsGreen" id="lblTopMaleTime"></div></td>
+                <td class="clsResultBL" style="border-bottom:1px solid lightGrey"><div class="clsSmall" id="lblTopFemaleName"></div></td>
+                <td class="clsResultB" style="border-bottom:1px solid lightGrey"><div class="clsGreen" id="lblTopFemaleTime"></div></td>
+                <td class="clsResultBL clsRighted" style="border-bottom:1px solid lightGrey">&nbsp;</td>
+              </tr>
+              <tr class="clsResultMed">
+                <td class="clsRighted" style="border-bottom:1px solid lightGrey">Top Member:</td>
+                <td class="clsResultBL" style="border-bottom:1px solid lightGrey"><div class="clsSmall" id="lblTopMaleMemberName"></div></td>
+                <td class="clsResultB" style="border-bottom:1px solid lightGrey"><div class="clsGreen" id="lblTopMaleMemberTime"></div></td>
+                <td class="clsResultBL" style="border-bottom:1px solid lightGrey"><div class="clsSmall" id="lblTopFemaleMemberName"></div></td>
+                <td class="clsResultB" style="border-bottom:1px solid lightGrey"><div class="clsGreen" id="lblTopFemaleMemberTime"></div></td>
+                <td class="clsResultBL clsRighted" style="border-bottom:1px solid lightGrey">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="divGraph" style="width:620px; height:200px; margin-top:5px;"></div>
+        </div>
+      </div>
+      <div class="clsFloatRight cls300">
+        <div class="clsHasFloats" id="divMasterList" style="display:none;">
+          <div style="line-height:33px;" class="clsBodyB clsFloatLeft">Other Years:</div>
+          <div class="clsFloatLeft"><select id="lstMasterlist" class="clsBigSelect" onchange="ChangeEvent(this.options[this.selectedIndex].value);"><option value="">Select ...</option></select></div>
+        </div>
+        <div id="divAd1" class="clsPadTop10">
+<div id="div1" class="clsPadTop10">
+<script type='text/javascript'>  var googletag = googletag || {}; googletag.cmd = googletag.cmd || []; (function () { var gads = document.createElement('script'); gads.async = true; gads.type = 'text/javascript'; var useSSL = 'https:' == document.location.protocol; gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js'; var node = document.getElementsByTagName('script')[0]; node.parentNode.insertBefore(gads, node); })();</script>
+<script type='text/javascript'>  googletag.cmd.push(function () { googletag.defineSlot('/13132917/Athlinks_Box1_300x250', [300, 250], 'div-gpt-ad-1359490719269-0').addService(googletag.pubads()); googletag.pubads().enableSingleRequest(); googletag.enableServices(); });</script><!-- Athlinks_Box1_300x250 --><div id='div-gpt-ad-1359490719269-0' style='width:300px; height:250px;'><script type='text/javascript'>                                                                                                                                                                                                                                                                                                                                                                                            googletag.cmd.push(function () { googletag.display('div-gpt-ad-1359490719269-0'); });</script></div>
+</div>
+        </div>
+      </div>
+    </div>
+    <div class="clsHasFloats">
+      <div class="cls620 clsMargRight20 clsFloatLeft">
+<!-- div for EventHead is in time.aspx, so we are mid-div here //-->
+<script language="javascript" type="text/javascript">
+  function ctrlResultsView_Init() {
+    $("#txtBibOrName").keypress(function (e) {
+      if (e.which == 13) {
+        SearchByBibOrName();
+      }
+    });
+
+    
+  }
+  function ChangeViewMode(mode) {
+    $("#lstViewMode").attr("disabled", "disabled");
+    $("#lstAgeGroups").attr("disabled", "disabled");
+    if (mode == "a") {
+        window.location.href = '/time.aspx?eventid=65990&courseid=97583&mode=a';
+    } else {
+        window.location.href = '/time.aspx?eventid=65990&courseid=97583&mode=o';
+    }
+  }
+  function SearchByBibOrName() {
+    var term = $("#txtBibOrName").val().replace(' ','+');
+    if (term == '' || term.length < 2 ) {
+      alert("Please provide at least 2 letters or numbers to Search.");
+      return;
+    }
+    window.location.href = '/time.aspx?eventid=65990&courseid=97583&term='+term;
+  }
+  function ClearBibOrName(){
+    window.location.href = '/time.aspx?eventid=65990&courseid=97583';
+  }
+  function ChangeOverall(pg) {
+    if( pg == '' )
+    {
+      return;
+    }
+    $("#lstViewMode").attr("disabled", "disabled");
+    $("#lstPagesO").attr("disabled", "disabled");
+    window.location.href = '/time.aspx?eventid=65990&courseid=97583&genderpage=' + pg;
+  }
+</script>
+<div class="clsContent clsLefted clsAuto cls600">
+  
+  <a name="classsel"></a>
+  
+    <div class="clsHasFloats clsPadBot5">
+      <div class="clsFloatLeft cls20pct clsMargRight5 clsBodyB" style="line-height:34px;">View Mode:</div>
+      <div class="clsFloatLeft cls75pct" style="line-height:34px;">
+        <select id="lstViewMode" class="clsBigSelect" onchange="ChangeViewMode(this.options[this.selectedIndex].value)"><option value="a">Age Groups</option><option value="o"selected='true'>Genders</option></select>
+        
+            <select id="lstPagesO" class="clsBigSelect" onchange="ChangeOverall( this.options[this.selectedIndex].value );">
+            <option value="">Select ...</option>
+          
+            <option value="A1">Overall 1-100</option><option selected="true" value="A2">Overall 101-176</option>
+          
+            <option value="U1">Unspecified 1-100</option><option value="U2">Unspecified 101-176</option>
+          
+            </select>
+          
+            <!-- For the searchies //-->
+            <table class="clsHidden">
+          
+            <tr>
+              <td class="clsBodyB clsTopped">A</td>
+              <td class="clsBodyB clsTopped"><a href="http://www.athlinks.com/results/65990/97583/a1/State-To-State-5K-2003.aspx">1-100</a> | <strong>101-176</strong></td>
+            </tr>
+          
+            <tr>
+              <td class="clsBodyB clsTopped">U</td>
+              <td class="clsBodyB clsTopped"><a href="http://www.athlinks.com/results/65990/97583/u1/State-To-State-5K-2003.aspx">1-100</a> | <a href="http://www.athlinks.com/results/65990/97583/u2/State-To-State-5K-2003.aspx">101-176</a></td>
+            </tr>
+          
+            </table>
+          
+        or
+      </div>
+    </div>
+  
+
+  
+    <div class="clsHasFloats" id="divSearchByNameOrBib">
+      <div class="clsFloatLeft cls20pct clsMargRight5 clsBodyB" style="line-height:34px;">Name or Bib:</div>
+      <div class="clsFloatLeft cls75pct"><input type="text" id="txtBibOrName" class="clsInputBox" style="width:140px;"  /> <a onclick="SearchByBibOrName();" id="btnSearchByBib" class="btnNeutral">Lookup</a> <a onclick="ClearBibOrName();" id="btnSearchByBibClear" class="btnNeutral">Clear</a></div>
+    </div>
+    
+</div>
+          
+
+<!-- Comment: This is the end of the EventHeader div from time.aspx //-->
+<!-- End Comment //-->
+<div class="clsColSingleOpen clsPadSides10">
+  <div id="divResults" class="clsPadTop10">
+
+      
+          <table cellpadding="0" cellspacing="0" border="0" >
+      
+        
+          <input name="ctrlResults$rptClass$ctl01$fldClassID" type="hidden" id="ctrlResults_rptClass_ctl01_fldClassID" value="A" />
+          <tr><th class="clsResultTK" colspan="13"><br /><a name="A"><div class="clsTitle"><div><div class='clsFloatLeft clsTitle'>Overall Results</div></div></div></a></th></tr>
+          <tr><td colspan="08" class="clsResultHK">&nbsp;</td><td colspan="3" class="clsresultbl">&nbsp;</td></tr><tr><th class="clsResultHK">&nbsp;</th><th class="clsResultHKL clsCentered">A</th><th class="clsResultHKL clsCentered">G</th><th class="clsResultHKL clsCentered">O</th><th class="clsResultHKL clsCentered">Athlete</th><th width="30" class="clsResultHKL clsCentered">M/F</th><th width="30" class="clsResultHKL clsCentered">A</th><th width="50" class="clsResultHKL clsCentered">Bib</th><th width="65" class="clsResultHKL clsCentered">Final</th><th width="50" class="clsResultHK">Pace</th><th class="clsResultHK">Claim!</th></tr>
+
+
+
+          
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">8</td>
+                <td class="clsResultBL">100</td>
+                <td class="clsResultBL">101</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936022/39865050">Shelee Webster</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">26</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">28:07</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl00_Td2" class="clsResultB">
+                  09:02
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865050&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">14</td>
+                <td class="clsResultBL">102</td>
+                <td class="clsResultBL">102</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936023/39865051">Janet Pettit</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">18</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">28:16</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl01_Td2" class="clsResultB">
+                  09:05
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865051&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">15</td>
+                <td class="clsResultBL">103</td>
+                <td class="clsResultBL">103</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936024/39865052">Lyndsay Corcoran</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">15</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">28:24</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl02_Td2" class="clsResultB">
+                  09:08
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865052&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">3</td>
+                <td class="clsResultBL">103</td>
+                <td class="clsResultBL">104</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936025/39865053">Sue Morris</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">55</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">28:24</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl03_Td2" class="clsResultB">
+                  09:08
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865053&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB"><img src="/images/icoMemberSm.gif"  hspace="1" vspace="0" alt="Member" />&nbsp;</td>
+                
+                <td class="clsResultBL">30</td>
+                <td class="clsResultBL">105</td>
+                <td class="clsResultBL">105</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/49450388/39865054">Meg Lambertus</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">23</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">28:29</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl04_Td2" class="clsResultB">
+                  09:10
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">6</td>
+                <td class="clsResultBL">106</td>
+                <td class="clsResultBL">106</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936027/39865055">Amy Dawson</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">49</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">28:55</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl05_Td2" class="clsResultB">
+                  09:18
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865055&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">6</td>
+                <td class="clsResultBL">107</td>
+                <td class="clsResultBL">107</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936028/39865056">Julie Sims</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">43</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">28:58</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl06_Td2" class="clsResultB">
+                  09:19
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865056&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">3</td>
+                <td class="clsResultBL">108</td>
+                <td class="clsResultBL">108</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936029/39865057">Alec Thomas</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">8</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">28:59</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl07_Td2" class="clsResultB">
+                  09:19
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865057&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">7</td>
+                <td class="clsResultBL">109</td>
+                <td class="clsResultBL">109</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936030/39865058">Frank Thomas</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">42</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">29:01</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl08_Td2" class="clsResultB">
+                  09:20
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865058&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">12</td>
+                <td class="clsResultBL">110</td>
+                <td class="clsResultBL">110</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936031/39865059">Greg Pelfrey</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">10</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">29:08</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl09_Td2" class="clsResultB">
+                  09:22
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865059&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">7</td>
+                <td class="clsResultBL">111</td>
+                <td class="clsResultBL">111</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936032/39865060">L. Olah-</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">48</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">29:17</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl10_Td2" class="clsResultB">
+                  09:25
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865060&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">8</td>
+                <td class="clsResultBL">112</td>
+                <td class="clsResultBL">112</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936033/39865061">Jeff Manley</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">43</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">29:32</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl11_Td2" class="clsResultB">
+                  09:30
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865061&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">31</td>
+                <td class="clsResultBL">113</td>
+                <td class="clsResultBL">113</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936034/39865062">Shannon King</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">21</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">29:34</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl12_Td2" class="clsResultB">
+                  09:30
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865062&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">32</td>
+                <td class="clsResultBL">114</td>
+                <td class="clsResultBL">114</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936035/39865063">Alison Greiner</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">21</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">29:37</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl13_Td2" class="clsResultB">
+                  09:31
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865063&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">9</td>
+                <td class="clsResultBL">115</td>
+                <td class="clsResultBL">115</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936036/39865064">Aubrey Beidatsch</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">28</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">29:57</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl14_Td2" class="clsResultB">
+                  09:38
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865064&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">33</td>
+                <td class="clsResultBL">116</td>
+                <td class="clsResultBL">116</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936037/39865065">Elizabeth Kearney</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">20</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">30:09</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl15_Td2" class="clsResultB">
+                  09:42
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865065&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">13</td>
+                <td class="clsResultBL">117</td>
+                <td class="clsResultBL">117</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936038/39865066">Carly Kimiecik</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">10</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">30:20</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl16_Td2" class="clsResultB">
+                  09:45
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865066&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">16</td>
+                <td class="clsResultBL">118</td>
+                <td class="clsResultBL">118</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936039/39865067">Jessica Ziegler</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">15</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">30:22</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl17_Td2" class="clsResultB">
+                  09:46
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865067&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">7</td>
+                <td class="clsResultBL">119</td>
+                <td class="clsResultBL">119</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936040/39865068">ETHAN BALSER</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">31</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">30:23</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl18_Td2" class="clsResultB">
+                  09:46
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865068&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">34</td>
+                <td class="clsResultBL">120</td>
+                <td class="clsResultBL">120</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936041/39865069">Kristin Porter</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">20</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">30:31</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl19_Td2" class="clsResultB">
+                  09:49
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865069&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">14</td>
+                <td class="clsResultBL">121</td>
+                <td class="clsResultBL">121</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936042/39865070">Nathan Thomas</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">10</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">30:41</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl20_Td2" class="clsResultB">
+                  09:52
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865070&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">17</td>
+                <td class="clsResultBL">122</td>
+                <td class="clsResultBL">122</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936043/39865071">Heather Kloft</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">18</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">30:45</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl21_Td2" class="clsResultB">
+                  09:53
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865071&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">9</td>
+                <td class="clsResultBL">123</td>
+                <td class="clsResultBL">123</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936044/39865072">Laurie Traveline</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">37</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">30:49</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl22_Td2" class="clsResultB">
+                  09:55
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865072&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">35</td>
+                <td class="clsResultBL">124</td>
+                <td class="clsResultBL">124</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936045/39865073">Adam Hackett</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">20</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">30:52</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl23_Td2" class="clsResultB">
+                  09:56
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865073&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">36</td>
+                <td class="clsResultBL">125</td>
+                <td class="clsResultBL">125</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936046/39865074">Karen King</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">20</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">30:55</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl24_Td2" class="clsResultB">
+                  09:57
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865074&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">4</td>
+                <td class="clsResultBL">126</td>
+                <td class="clsResultBL">126</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936047/39865075">Robby Alexander</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">9</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">30:57</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl25_Td2" class="clsResultB">
+                  09:57
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865075&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">8</td>
+                <td class="clsResultBL">127</td>
+                <td class="clsResultBL">127</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936048/39865076">Donna Lucas</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">46</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">31:16</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl26_Td2" class="clsResultB">
+                  10:03
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865076&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">15</td>
+                <td class="clsResultBL">128</td>
+                <td class="clsResultBL">128</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936049/39865077">Kelly Harp</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">12</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">31:22</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl27_Td2" class="clsResultB">
+                  10:05
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865077&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">37</td>
+                <td class="clsResultBL">129</td>
+                <td class="clsResultBL">129</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936050/39865078">Katie Colgan</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">21</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">31:38</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl28_Td2" class="clsResultB">
+                  10:10
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865078&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">37</td>
+                <td class="clsResultBL">129</td>
+                <td class="clsResultBL">130</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936051/39865079">Jill Winograd</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">21</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">31:38</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl29_Td2" class="clsResultB">
+                  10:10
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865079&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">9</td>
+                <td class="clsResultBL">129</td>
+                <td class="clsResultBL">131</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936052/39865080">John Corcoran</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">49</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">31:38</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl30_Td2" class="clsResultB">
+                  10:10
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865080&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">5</td>
+                <td class="clsResultBL">132</td>
+                <td class="clsResultBL">132</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936053/39865081">Bobby Bennett</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">8</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">32:01</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl31_Td2" class="clsResultB">
+                  10:18
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865081&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">18</td>
+                <td class="clsResultBL">133</td>
+                <td class="clsResultBL">133</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936054/39865082">Rachel Mabry</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">15</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">32:04</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl32_Td2" class="clsResultB">
+                  10:19
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865082&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">19</td>
+                <td class="clsResultBL">134</td>
+                <td class="clsResultBL">134</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936055/39865083">Emily Seger</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">15</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">32:34</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl33_Td2" class="clsResultB">
+                  10:28
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865083&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">10</td>
+                <td class="clsResultBL">135</td>
+                <td class="clsResultBL">135</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936056/39865084">Patricia Prince</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">38</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">32:35</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl34_Td2" class="clsResultB">
+                  10:29
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865084&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">8</td>
+                <td class="clsResultBL">136</td>
+                <td class="clsResultBL">136</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936057/39865085">Sara Vondracek</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">30</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">32:43</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl35_Td2" class="clsResultB">
+                  10:31
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865085&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">11</td>
+                <td class="clsResultBL">136</td>
+                <td class="clsResultBL">137</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/10185944/39865086">Kelly Osborn</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">38</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">32:43</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl36_Td2" class="clsResultB">
+                  10:31
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865086&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">39</td>
+                <td class="clsResultBL">138</td>
+                <td class="clsResultBL">138</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936059/39865087">Christina Townsley</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">23</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">32:56</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl37_Td2" class="clsResultB">
+                  10:36
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865087&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">2</td>
+                <td class="clsResultBL">139</td>
+                <td class="clsResultBL">139</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/34749955/39865088">Linda Cooper</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">60</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">33:01</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl38_Td2" class="clsResultB">
+                  10:37
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865088&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">10</td>
+                <td class="clsResultBL">140</td>
+                <td class="clsResultBL">140</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936061/39865089">Lynette Beiser</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">46</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">35:41</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl39_Td2" class="clsResultB">
+                  11:29
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865089&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">9</td>
+                <td class="clsResultBL">141</td>
+                <td class="clsResultBL">141</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936062/39865090">Wendy Lucia-Bennett</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">43</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">36:03</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl40_Td2" class="clsResultB">
+                  11:36
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865090&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">12</td>
+                <td class="clsResultBL">142</td>
+                <td class="clsResultBL">142</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936063/39865091">Lesa Chaney</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">36</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">36:56</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl41_Td2" class="clsResultB">
+                  11:53
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865091&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">20</td>
+                <td class="clsResultBL">142</td>
+                <td class="clsResultBL">143</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936064/39865092">Maggie Rupel</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">15</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">36:56</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl42_Td2" class="clsResultB">
+                  11:53
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865092&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">11</td>
+                <td class="clsResultBL">144</td>
+                <td class="clsResultBL">144</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936065/39865093">Rick Bucher</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">47</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">37:01</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl43_Td2" class="clsResultB">
+                  11:54
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865093&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">9</td>
+                <td class="clsResultBL">145</td>
+                <td class="clsResultBL">145</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936066/39865094">Jennifer Linville</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">30</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">37:54</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl44_Td2" class="clsResultB">
+                  12:11
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865094&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">13</td>
+                <td class="clsResultBL">146</td>
+                <td class="clsResultBL">146</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936067/39865095">Meg Vanatsky</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">37</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">38:19</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl45_Td2" class="clsResultB">
+                  12:19
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865095&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">13</td>
+                <td class="clsResultBL">146</td>
+                <td class="clsResultBL">147</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936068/39865096">Anita Todd</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">36</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">38:19</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl46_Td2" class="clsResultB">
+                  12:19
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865096&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">40</td>
+                <td class="clsResultBL">148</td>
+                <td class="clsResultBL">148</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936069/39865097">Julie Stahl</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">21</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">38:36</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl47_Td2" class="clsResultB">
+                  12:25
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865097&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">16</td>
+                <td class="clsResultBL">148</td>
+                <td class="clsResultBL">149</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936070/39865098">Maggie Flynn</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">12</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">38:36</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl48_Td2" class="clsResultB">
+                  12:25
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865098&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">15</td>
+                <td class="clsResultBL">150</td>
+                <td class="clsResultBL">150</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936071/39865099">Douglas Coffin</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">38</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">39:40</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl49_Td2" class="clsResultB">
+                  12:46
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865099&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">9</td>
+                <td class="clsResultBL">151</td>
+                <td class="clsResultBL">151</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936072/39865100">Susan Lipnickey</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">50</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">39:41</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl50_Td2" class="clsResultB">
+                  12:46
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865100&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">41</td>
+                <td class="clsResultBL">152</td>
+                <td class="clsResultBL">152</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936073/39865101">Vickie Kozonis</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">20</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">40:20</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl51_Td2" class="clsResultB">
+                  12:58
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865101&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">41</td>
+                <td class="clsResultBL">152</td>
+                <td class="clsResultBL">153</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936074/39865102">Jean Foster</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">19</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">40:20</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl52_Td2" class="clsResultB">
+                  12:58
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865102&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">10</td>
+                <td class="clsResultBL">154</td>
+                <td class="clsResultBL">154</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936075/39865103">Jan Dhonau</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">42</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">41:44</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl53_Td2" class="clsResultB">
+                  13:25
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865103&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">10</td>
+                <td class="clsResultBL">154</td>
+                <td class="clsResultBL">155</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936076/39865104">LeAnne Montgomery</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">51</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">41:44</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl54_Td2" class="clsResultB">
+                  13:25
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865104&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">4</td>
+                <td class="clsResultBL">156</td>
+                <td class="clsResultBL">156</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936077/39865105">Barb Eutsler</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">58</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">44:27</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl55_Td2" class="clsResultB">
+                  14:18
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865105&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">11</td>
+                <td class="clsResultBL">157</td>
+                <td class="clsResultBL">157</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936078/39865106">Bruce McFadden</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">53</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">44:28</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl56_Td2" class="clsResultB">
+                  14:18
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865106&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">10</td>
+                <td class="clsResultBL">158</td>
+                <td class="clsResultBL">158</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936079/39865107">Chris Freehauf</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">31</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">45:40</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl57_Td2" class="clsResultB">
+                  14:41
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865107&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">10</td>
+                <td class="clsResultBL">158</td>
+                <td class="clsResultBL">159</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936080/39865108">Sherry Dean</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">28</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">45:40</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl58_Td2" class="clsResultB">
+                  14:41
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865108&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">12</td>
+                <td class="clsResultBL">158</td>
+                <td class="clsResultBL">160</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936081/39865109">Sharon Custer</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">46</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">45:40</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl59_Td2" class="clsResultB">
+                  14:41
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865109&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">11</td>
+                <td class="clsResultBL">161</td>
+                <td class="clsResultBL">161</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936082/39865110">Mary Jane Elkins</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">40</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">45:41</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl60_Td2" class="clsResultB">
+                  14:42
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865110&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">13</td>
+                <td class="clsResultBL">161</td>
+                <td class="clsResultBL">162</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936083/39865111">Marianne Parker</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">46</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">45:41</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl61_Td2" class="clsResultB">
+                  14:42
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865111&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">14</td>
+                <td class="clsResultBL">163</td>
+                <td class="clsResultBL">163</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936084/39865112">Chrisine Noble</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">49</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">46:28</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl62_Td2" class="clsResultB">
+                  14:57
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865112&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">16</td>
+                <td class="clsResultBL">164</td>
+                <td class="clsResultBL">164</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936085/39865113">Carol Sherwin</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">39</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">46:30</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl63_Td2" class="clsResultB">
+                  14:58
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865113&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">3</td>
+                <td class="clsResultBL">165</td>
+                <td class="clsResultBL">165</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936086/39865114">Kathleen Fox</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">60</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">46:38</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl64_Td2" class="clsResultB">
+                  15:00
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865114&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">12</td>
+                <td class="clsResultBL">166</td>
+                <td class="clsResultBL">166</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936087/39865115">Marilyn Sasser</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">42</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">46:44</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl65_Td2" class="clsResultB">
+                  15:02
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865115&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">1</td>
+                <td class="clsResultBL">167</td>
+                <td class="clsResultBL">167</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936088/39865116">Michael Ball</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">68</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">49:13</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl66_Td2" class="clsResultB">
+                  15:50
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865116&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">15</td>
+                <td class="clsResultBL">168</td>
+                <td class="clsResultBL">168</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936089/39865117">Debra Woike</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">49</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">49:49</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl67_Td2" class="clsResultB">
+                  16:02
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865117&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">12</td>
+                <td class="clsResultBL">169</td>
+                <td class="clsResultBL">169</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936090/39865118">Karin Chaundy</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">54</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">49:51</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl68_Td2" class="clsResultB">
+                  16:02
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865118&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">5</td>
+                <td class="clsResultBL">170</td>
+                <td class="clsResultBL">170</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936091/39865119">Fred Chaundy</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">55</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">49:52</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl69_Td2" class="clsResultB">
+                  16:03
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865119&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">11</td>
+                <td class="clsResultBL">171</td>
+                <td class="clsResultBL">171</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936092/39865120">CHRISTINA SLONE</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">29</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">50:10</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl70_Td2" class="clsResultB">
+                  16:08
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865120&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">43</td>
+                <td class="clsResultBL">171</td>
+                <td class="clsResultBL">172</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936093/39865121">Cori Bystrom</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">23</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">50:10</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl71_Td2" class="clsResultB">
+                  16:08
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865121&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">16</td>
+                <td class="clsResultBL">173</td>
+                <td class="clsResultBL">173</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936094/39865122">Cheryl Ricer</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">48</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">51:04</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl72_Td2" class="clsResultB">
+                  16:26
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865122&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">4</td>
+                <td class="clsResultBL">174</td>
+                <td class="clsResultBL">174</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936095/39865123">Eileen Siefke</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">60</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">51:06</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl73_Td2" class="clsResultB">
+                  16:26
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865123&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">11</td>
+                <td class="clsResultBL">175</td>
+                <td class="clsResultBL">175</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936096/39865124">Amy Clawson</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">31</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">54:18</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl74_Td2" class="clsResultB">
+                  17:28
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865124&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+              <tr class='clsResult'>
+                
+                  <td class="clsResultB">&nbsp;</td>
+                
+                <td class="clsResultBL">12</td>
+                <td class="clsResultBL">176</td>
+                <td class="clsResultBL">176</td>
+                <td class="clsResultBLL"><a href="http://athlinks.com/result/65990/97583/39936097/39865125">Holli Baker</a></td>
+                <td width="30" class="clsResultBL">U</td>
+                <td width="30" class="clsResultBL">32</td>
+                <td width="50" class="clsResultBL">-</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                  <td width="65" class="clsResultFinalBL">54:19</td>
+                  <td id="ctrlResults_rptClass_ctl01_rptResults_ctl75_Td2" class="clsResultB">
+                  17:28
+                  </td>
+
+                
+                <td class="clsResultB clsMiddled" valign="middle">
+                  
+                    <a href="/ClaimEntry.aspx?e=39865125&c=97583"><img src="/c.png" class="clsClaim"/></a>
+                  
+                  &nbsp;
+                </td>
+              </tr>
+            
+        
+
+    <tr>
+      <td colspan="13"><div>&nbsp;</div></td>
+    </tr>
+
+    <tr>
+      <td align="center" colspan="13">
+        <img src="/images/util/dot_alpha.gif" width="1" height="4" hspace="0" vspace="0" border="0" />
+      </td>
+    </tr>
+  </table>
+  </div>
+  
+</div>
+
+
+      </div>
+      <div class="clsFloatRight cls300">
+        <div id="divAd2" class="clsPadTop10 clsPadBot20"><div banner_ad="1" banner_ad_zone="97094" banner_ad_width="300" banner_ad_height="250" banner_type="iframe" id="ad_mapmyfitenss_2"></div></div>
+      </div>
+      
+    </div>
+  
+  
+  
+</div>
+  
+
+<div class="clsCentered" style="background-color:#fff;padding:25px 0 15px 0;">
+  <div banner_ad="1" banner_ad_zone="112841" banner_ad_width="728" banner_ad_height="90" banner_type="iframe" id="adif2"></div>
+</div>
+
+<div id="Foot">
+	<div style="padding:12px;">
+		<div class="clsSmall" style="padding:3px 10px 3px 10px;">
+			<a href="/default.aspx"><img src="/images/bltArrowRight.gif" height="9" width="11" hspace="5" vspace="0" border="0" alt="Bullet" />Home</a> | 
+			<a href="/BrowseAff.aspx"><img src="/images/bltArrowRight.gif" height="9" width="11" hspace="5" vspace="0" border="0" alt="Bullet" />Browse Groups</a> |
+			<a href="/browse.aspx?g=&aF=0&aC=199&rC=&ct=&sp=&ph=0&dj=1&p=1&pS=48"><img src="/images/bltArrowRight.gif" height="9" width="11" hspace="5" vspace="0" border="0" alt="Bullet" />Browse Members</a> |
+			<a href="/athletes.aspx"><img src="/images/bltArrowRight.gif" height="9" width="11" hspace="5" vspace="0" border="0" alt="Bullet" />Athlete Directory</a> |
+			<a href="/faq.aspx"><img src="/images/bltArrowRight.gif" height="9" width="11" hspace="5" vspace="0" border="0" alt="Bullet" />F.A.Q.</a> |
+			<a href="/advertise/"><img src="/images/bltArrowRight.gif" height="9" width="11" hspace="5" vspace="0" border="0" alt="Bullet" />Advertising</a> |
+			<a href="/contact.aspx"><img src="/images/bltArrowRight.gif" height="9" width="11" hspace="5" vspace="0" border="0" alt="Bullet" />Contact Us</a> |
+			<a href="/helpPrivacy.aspx"><img src="/images/bltArrowRight.gif" height="9" width="11" hspace="5" vspace="0" border="0" alt="Bullet" />Privacy Policy</a>
+			<div class="clsSmall">&nbsp;&nbsp; © Copyright 2001-2013, Athlinks.com. All rights reserved. </div>
+			<div class="clsSmallDim clsHidden">&nbsp;&nbsp; Licensed – U.S. Patent No. 6,985,875 and 7,047,214.</div>
+		</div>
+<!-- Foot End //-->
+	</div>
+</div>
+</div>
+<div id="dialog" style="display:none;height:360px;width:600px;margin:0;padding:0;"></div>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2421114-1']);
+  _gaq.push(['_trackPageview']);
+  (function () {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+<!-- Google Code for Athlinks Remarketing List -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1066895327;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "666666";
+var google_conversion_label = "b7pTCI3XrQIQ34_e_AM";
+var google_conversion_value = 0;
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1066895327/?label=b7pTCI3XrQIQ34_e_AM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<!--End Google Code for Athlinks Remarketing List -->
+
+
+
+<script type="text/html" id="tplWaitList">
+{#template MAIN}
+<div class="clsHasFloats">
+{#foreach $T as item}
+<div class="clsHasFloats clsPadBot10 clsFloatLeft clsMargRight10" style="width:280px;">
+  <div class="clsFloatLeft link" onclick="window.location.href='/racer/results/{$T.item.Athlete.RacerID}';" style="background:#fff url(/images/flgRight-results.png); margin-right:5px; padding:3px 0 2px 0; text-align:center; width:40px;"><div style="width:35px;"><div style="color:#fff;font-size:16px;font-weight:bold;line-height:16px;margin:0;padding:0;">{$T.item.Athlete.ResultCount}</div><div style="color:#fff;font-size:11px;font-weight:bold;letter-spacing:-.05em;line-height:10px;margin:0;padding:0;">races</div></div></div>
+  <div class="clsFloatLeft" style="width:60px;"><a href="/racer/{$T.item.Athlete.RacerID}"><img src="{$T.item.Athlete.PhotoPath}" class="clsProfileThumb"/></a></div>
+  <div id="divRacerDisplayName" class="clsBodyB"><img src="/images/icoMember.gif"><a href="/racer/{$T.item.Athlete.RacerID}">{OwnerLib.ShortName($T.item.Athlete.FName,$T.item.Athlete.LName)}</a></div>  
+  <div class="clsPadded3 clsHasFloats">
+    <div class="clsSmallDimB clsFloatLeft clsMargRight10">Age: <span class="clsSmallB">{$T.item.Athlete.Age}</span></div>
+    <div class="clsSmallDimB clsFloatLeft clsMargRight10">Gender: <span class="clsSmallB">{$T.item.Athlete.Gender}</span></div>
+    <div class="clsSmallDimB clsFloatLeft clsMargRight10">Time: <span class="clsBodyB"><span class="{$T.item.UnofficialTicks===0?'clsDim':'green'}">{$T.item.UnofficialTicks===0?'Not Set':$T.item.UnofficialTime}</span></span></div>
+    <div>&nbsp;</div>
+  </div>
+</div>
+{#/for}
+</div>
+{#/template MAIN}
+</script></form>
+</body>
+</html>
