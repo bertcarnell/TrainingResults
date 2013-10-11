@@ -1,0 +1,18 @@
+2003 State To State 5k
+========================================================
+
+```{r temp, echo=FALSE, eval=TRUE, results='hide'}
+read_chunk(file.path("C:","Users","carnellr","Documents","Repositories",
+                     "TrainingResults","2003StateToState5k","source",
+                     "results_chunks.R"))
+```
+
+```{r setup, eval=TRUE, echo=FALSE, results='hide', message=FALSE}
+```
+
+* **Date**: Sunday 28 September 2003
+* **Distance**: 5 km
+* **Finishing Time**: 25:30
+
+```{r plotchunk, eval=TRUE, echo=FALSE, fig.width=7, fig.height=6, message=FALSE}
+```

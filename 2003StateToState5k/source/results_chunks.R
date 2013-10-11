@@ -1,4 +1,4 @@
-## Setup
+## ---- setup
 repositoryPath <- file.path("C:","Users","carnellr","Documents","Repositories",
                             "TrainingResults")
 source(file.path(repositoryPath, "Common", "Utilities.R"))
@@ -28,8 +28,6 @@ Y <- rbind(Y, data.frame(Athlete=X[ind,5],
 
 indMe <- which(Y$Athlete == "Robert Carnell")
 
-win.metafile(filename=file.path(outPath, "results.wmf"))
+## ---- plotchunk
 timeHistogramBoxplot(Y$Final, indMe, "2003 State to State 5k", 
                      strptime(as.character(seq(15,50,by=5)), "%M"))
-dev.off()
-
