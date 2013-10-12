@@ -16,17 +16,18 @@ races <- c(
 )
 
 filenamesNoExt <- list(
-  file.path(repositoryPath, races[1], "source", "results")
+  file.path(repositoryPath, races[1], "source", "results"),
+  file.path(repositoryPath, races[2], "source", "results")
 )
 
 ### knit the files to html
 dummy <- sapply(filenamesNoExt, function(x) {
-  knitr::knit2html(paste(x, ".Rmd", sep=""))
+  knitr::knit2html(paste(x, ".Rmd", sep=""), quiet=TRUE)
 })
 
 ### copy the results to the gh-pages branch
 dummy <- mapply(function(x,y) {
   file.copy(paste(x, ".html", sep=""), 
-            file.path(pagesPath, paste(races[1], ".html", sep="")), 
+            file.path(pagesPath, paste(y, ".html", sep="")), 
             overwrite=TRUE)
-  }, filenamesNoExt, races[1])
+  }, filenamesNoExt, races[1:2])

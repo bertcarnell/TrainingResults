@@ -1,0 +1,21 @@
+2008 Columbus Half Marathon
+========================================================
+
+```{r temp, echo=FALSE, eval=TRUE, results='hide'}
+read_chunk(file.path("C:","Users","carnellr","Documents","Repositories",
+                     "TrainingResults","2008ColumbusHalfMarathon","source",
+                     "results_chunks.R"))
+```
+
+```{r setup, eval=TRUE, echo=FALSE, results='hide', message=FALSE}
+```
+
+* **Date**: Sunday 19 October 2008
+* **Distance**: 13.1 mi
+* **Finishing Time**: 2:02:09
+
+```{r plotchunk1, eval=TRUE, echo=FALSE, fig.width=7, fig.height=6, message=FALSE}
+```
+
+```{r plotchunk2, eval=TRUE, echo=FALSE, fig.width=7, fig.height=6, message=FALSE}
+```
