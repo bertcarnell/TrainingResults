@@ -1,6 +1,6 @@
-/2003StateToState5k\source/*.md
-/2003StateToState5k\source/*.html
-/2003statetostate5k\source/figure
-/2008columbushalfmarathon\source/figure
-/2008ColumbusHalfMarathon\source/*.html
-/2008ColumbusHalfMarathon\source/*.md
+/2003StateToState5k/source/*.md
+/2003StateToState5k/source/*.html
+/2003statetostate5k/source/figure/*.*
+/2008columbushalfmarathon/source/figure/*.*
+/2008ColumbusHalfMarathon/source/*.html
+/2008ColumbusHalfMarathon/source/*.md
