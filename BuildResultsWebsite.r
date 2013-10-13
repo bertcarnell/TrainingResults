@@ -18,7 +18,7 @@ races <- c(
 
 ################################################################################
 
-filenamesNoExt <- file.path(repositoryPath, races[1:3], "source")
+filenamesNoExt <- file.path(repositoryPath, races[1:4], "source")
 
 stopifnot(all(sapply(filenamesNoExt, function(x){
   file.exists(file.path(x, "results.Rmd"))
@@ -35,4 +35,4 @@ dummy <- mapply(function(x,y) {
   file.copy(file.path(x, "results.html"), 
             file.path(pagesPath, paste(y, ".html", sep="")), 
             overwrite=TRUE)
-  }, filenamesNoExt, races[1:3])
+  }, filenamesNoExt, races[1:4])
