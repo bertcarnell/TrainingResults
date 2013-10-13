@@ -5,11 +5,10 @@ source(file.path(repositoryPath, "Common", "Utilities.R"))
 
 racePath <- file.path(repositoryPath, "2003StateToState5k")
 dataPath <- file.path(racePath, "data")
-outPath <- file.path(racePath, "images")
 dataFile1 <- file.path(dataPath, "State-To-State 5K 2003 Race Results.htm")
 dataFile2 <- file.path(dataPath, "State-To-State 5K 2003 Race Results 2.htm")
 
-stopifnot(all(file.exists(c(racePath, dataPath, outPath, dataFile1, dataFile2))))
+stopifnot(all(file.exists(c(racePath, dataPath, dataFile1, dataFile2))))
 
 X <- readHTMLTable(dataFile1, stringsAsFactors=FALSE, colClasses="character")[[13]]
 ind <- 3:(nrow(X)-2)

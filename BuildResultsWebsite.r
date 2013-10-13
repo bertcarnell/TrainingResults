@@ -1,6 +1,7 @@
 rm(list=ls())
 
 require(knitr)
+require(markdown)
 
 repositoryPath <- file.path("C:","Users","carnellr","Documents","Repositories",
                             "TrainingResults")
@@ -15,19 +16,23 @@ races <- c(
   "2013CapitalCityHalfMarathon", "2013GiantEagleMultisportsTriathlon"
 )
 
-filenamesNoExt <- list(
-  file.path(repositoryPath, races[1], "source", "results"),
-  file.path(repositoryPath, races[2], "source", "results")
-)
+################################################################################
+
+filenamesNoExt <- file.path(repositoryPath, races[1:3], "source")
+
+stopifnot(all(sapply(filenamesNoExt, function(x){
+  file.exists(file.path(x, "results.Rmd"))
+})))
 
 ### knit the files to html
 dummy <- sapply(filenamesNoExt, function(x) {
-  knitr::knit2html(paste(x, ".Rmd", sep=""), quiet=TRUE)
+  setwd(x)
+  knitr::knit2html(file.path(x, "results.Rmd"), quiet=FALSE)
 })
 
 ### copy the results to the gh-pages branch
 dummy <- mapply(function(x,y) {
-  file.copy(paste(x, ".html", sep=""), 
+  file.copy(file.path(x, "results.html"), 
             file.path(pagesPath, paste(y, ".html", sep="")), 
             overwrite=TRUE)
-  }, filenamesNoExt, races[1:2])
+  }, filenamesNoExt, races[1:3])
